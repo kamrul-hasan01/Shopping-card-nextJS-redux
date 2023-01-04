@@ -1,10 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCart } from "../../redux/slices/cartSlice";
 import { Minus, Plus } from "../SVG/SVG";
 
 const ShoppingCard = () => {
   const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    const newCart = cart.filter((item) => item.key !== id);
+    dispatch(setCart(newCart));
+  };
+  const handleQuantity = (key, type) => {
+    console.log("key :", key);
+    console.log("type :", type);
+
+    const newCart = cart.map((item) => {
+      if (item.key === key) {
+        console.log("gg", item);
+      } else return item;
+    });
+    console.log("newCart :", newCart);
+  };
+
   return (
     <div className="relative z-10">
       <div className="fixed ">
@@ -48,13 +67,21 @@ const ShoppingCard = () => {
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm">
                                   <p className=" flex items-center gap-x-2">
-                                    <span>
+                                    <span
+                                      onClick={() =>
+                                        handleQuantity(item.key, "minus")
+                                      }
+                                    >
                                       <Minus />
                                     </span>
                                     <span className="text-xl">
                                       {item.quantity}
                                     </span>
-                                    <span>
+                                    <span
+                                      onClick={() =>
+                                        handleQuantity(item.key, "plus")
+                                      }
+                                    >
                                       <Plus />
                                     </span>
                                   </p>
@@ -63,6 +90,7 @@ const ShoppingCard = () => {
                                     <button
                                       type="button"
                                       className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      onClick={() => handleDelete(item.key)}
                                     >
                                       Remove
                                     </button>
