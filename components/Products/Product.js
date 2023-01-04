@@ -1,33 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCart } from "../../redux/slices/cartSlice";
 import { Start } from "../SVG/SVG";
 
 const Product = ({ content }) => {
-  const { name, price, starCount, img } = content;
+  const dispatch = useDispatch();
+  const { name, price, img } = content;
+  const { cart } = useSelector((state) => state.cart);
 
+  const handleAddToCart = (product) => {
+    let exists = cart.find((pd) => pd.key === product.key);
+    let newCart = [];
+    if (exists) {
+      const rest = cart.filter((pd) => pd.key !== product.key);
+      let newProduct = { ...exists };
+      newProduct.quantity = newProduct.quantity + 1;
+      newCart = [...rest, newProduct];
+    } else {
+      let newProduct = { ...product };
+      newProduct.quantity = 1;
+      newCart = [...cart, newProduct];
+    }
+
+    dispatch(setCart(newCart));
+  };
   return (
-    // <div className="w-3/12   p-4">
-    //   {/* // eslint-disable-next-line react/jsx-no-comment-textnodes */}
-    //   <div className="shadow-black shadow rounded-md p-2 group cursor-pointer">
-    //     <img
-    //       src={img}
-    //       alt=""
-    //       className="w-[100%] mx-auto bg-[red] rounded-xl"
-    //     />
-    //     <p className="text-lg pt-5 pb-2">
-    //       <span className="text-white ">$ {price}</span>{" "}
-    //       <span className="pl-4 text-gray-400">$ {price + 10}</span>
-    //     </p>
-    //     <h6 className="text-white text-xl">{name.slice(0, 45)}..</h6>
-    //     <div className="flex justify-between items-center py-4">
-    //       <p className="text-lg py-2">{starCount} Reviews</p>
-    //       <p>
-    //         <ShoppingCardIcon />
-    //       </p>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div class="w-3/12 p-4">
       <div className="rounded-lg shadow-md bg-gray-800 border-gray-700">
         <img class="p-8 rounded-t-lg" src={img} alt="product image" />
@@ -50,7 +48,10 @@ const Product = ({ content }) => {
           </div>
           <div class="flex items-center justify-between">
             <span class="text-3xl font-bold text-white">${price}</span>
-            <p class="text-white   focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+            <p
+              class="text-white   focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 cursor-pointer"
+              onClick={() => handleAddToCart(content)}
+            >
               Add to cart
             </p>
           </div>
