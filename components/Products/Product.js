@@ -14,10 +14,13 @@ const Product = ({ content }) => {
     let exists = cart.find((pd) => pd.key === product.key);
     let newCart = [];
     if (exists) {
-      const rest = cart.filter((pd) => pd.key !== product.key);
-      let newProduct = { ...exists };
-      newProduct.quantity = newProduct.quantity + 1;
-      newCart = [...rest, newProduct];
+      newCart = cart.map((item) => {
+        if (item.key === product.key) {
+          let newProduct = { ...item };
+          newProduct.quantity = newProduct.quantity + 1;
+          return newProduct;
+        } else return item;
+      });
     } else {
       let newProduct = { ...product };
       newProduct.quantity = 1;

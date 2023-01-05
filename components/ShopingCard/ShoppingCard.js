@@ -6,6 +6,13 @@ import { Minus, Plus } from "../SVG/SVG";
 
 const ShoppingCard = () => {
   const { cart } = useSelector((state) => state.cart);
+  console.log("cart :", cart.length, cart);
+
+  const total = cart?.reduce(
+    (previous, product) => previous + product?.price * product?.quantity,
+    0
+  );
+  console.log("total :", total.toFixed(2));
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
@@ -13,15 +20,22 @@ const ShoppingCard = () => {
     dispatch(setCart(newCart));
   };
   const handleQuantity = (key, type) => {
-    console.log("key :", key);
-    console.log("type :", type);
-
     const newCart = cart.map((item) => {
       if (item.key === key) {
-        console.log("gg", item);
+        let newProduct;
+        if (type === "plus" && item.quantity < item.stock) {
+          newProduct = { ...item };
+          newProduct.quantity = newProduct.quantity + 1;
+        } else if (type === "minus" && item.quantity > 1) {
+          newProduct = { ...item };
+
+          newProduct.quantity = newProduct.quantity - 1;
+        } else return item;
+        return newProduct;
       } else return item;
     });
-    console.log("newCart :", newCart);
+
+    dispatch(setCart(newCart ? newCart : []));
   };
 
   return (
@@ -50,7 +64,7 @@ const ShoppingCard = () => {
                               <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                 {/* // eslint-disable-next-line @next/next/no-img-element, @next/next/no-img-element */}
                                 <img
-                                  src={item.img}
+                                  src={item?.img}
                                   alt="Salmon"
                                   className="h-full w-full object-cover object-center"
                                 />
@@ -58,28 +72,28 @@ const ShoppingCard = () => {
                               <div className="ml-4 flex flex-1 flex-col">
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-gray-900">
-                                    <h3>{item.name}</h3>
-                                    <p className="ml-4">${item.price}</p>
+                                    <h3>{item?.name}</h3>
+                                    <p className="ml-4">${item?.price}</p>
                                   </div>
                                   <p className="mt-1 text-sm text-gray-500">
-                                    {item.category}
+                                    {item?.category}
                                   </p>
                                 </div>
                                 <div className="flex flex-1 items-end justify-between text-sm">
                                   <p className=" flex items-center gap-x-2">
                                     <span
                                       onClick={() =>
-                                        handleQuantity(item.key, "minus")
+                                        handleQuantity(item?.key, "minus")
                                       }
                                     >
                                       <Minus />
                                     </span>
                                     <span className="text-xl">
-                                      {item.quantity}
+                                      {item?.quantity}
                                     </span>
                                     <span
                                       onClick={() =>
-                                        handleQuantity(item.key, "plus")
+                                        handleQuantity(item?.key, "plus")
                                       }
                                     >
                                       <Plus />
@@ -90,7 +104,7 @@ const ShoppingCard = () => {
                                     <button
                                       type="button"
                                       className="font-medium text-indigo-600 hover:text-indigo-500"
-                                      onClick={() => handleDelete(item.key)}
+                                      onClick={() => handleDelete(item?.key)}
                                     >
                                       Remove
                                     </button>
@@ -113,7 +127,7 @@ const ShoppingCard = () => {
               <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                 <div className="flex justify-between text-base font-medium text-gray-900">
                   <p>Subtotal</p>
-                  <p>$262.00</p>
+                  <p>${total.toFixed(2)}</p>
                 </div>
                 <p className="mt-0.5 text-sm text-gray-500">
                   Shipping and taxes calculated at checkout.
