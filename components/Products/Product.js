@@ -27,11 +27,22 @@ const Product = ({ content }) => {
       newCart = [...cart, newProduct];
     }
     dispatch(setCart(newCart));
+    const cartItem = newCart.map((item) => {
+      return {
+        key: item.key,
+        quantity: item.quantity,
+      };
+    });
+    localStorage.setItem("cart", JSON.stringify(cartItem));
   };
   return (
     <div className="w-3/12 p-4">
       <div className="rounded-lg shadow-md bg-gray-800 border-gray-700">
-        <img className="p-8 rounded-t-lg" src={img} alt="product image" />
+        <img
+          className="p-8 rounded-t-lg w-full"
+          src={img}
+          alt="product image"
+        />
 
         <div className="px-5 pb-5">
           <a href="#">

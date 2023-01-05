@@ -1,18 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "../../redux/slices/cartSlice";
 import { Minus, Plus } from "../SVG/SVG";
 
 const ShoppingCard = () => {
   const { cart } = useSelector((state) => state.cart);
-  console.log("cart :", cart.length, cart);
+  const { products } = useSelector((state) => state.products);
 
   const total = cart?.reduce(
     (previous, product) => previous + product?.price * product?.quantity,
     0
   );
-  console.log("total :", total.toFixed(2));
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
@@ -37,10 +36,38 @@ const ShoppingCard = () => {
 
     dispatch(setCart(newCart ? newCart : []));
   };
+  const handleCheckout = () => {
+    const confirm = window.confirm(" sure");
+    if (confirm) {
+      dispatch(setCart([]));
+      localStorage.removeItem("cart");
+    }
+  };
 
+  const handleTest = () => {
+    const getData = JSON.parse(localStorage.getItem("cart"));
+    let newCart = [];
+
+    if (getData) {
+      products.filter((item) =>
+        getData.find((local_item) => {
+          let newItem;
+          if (local_item.key === item.key) {
+            newItem = { ...item };
+            newItem.quantity = local_item.quantity;
+            newCart = [...newCart, newItem];
+          }
+        })
+      );
+      dispatch(setCart(newCart));
+    }
+  };
+  useEffect(() => {
+    handleTest();
+  }, [products]);
   return (
     <div className="relative z-10">
-      <div className="fixed ">
+      <div className="fixed">
         <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
           <div className="pointer-events-auto w-screen max-w-md">
             <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
@@ -133,12 +160,12 @@ const ShoppingCard = () => {
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-                  <a
-                    href="#"
+                  <p
+                    onClick={() => handleCheckout()}
                     className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
                     Checkout
-                  </a>
+                  </p>
                 </div>
               </div>
             </div>
