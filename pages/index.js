@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
 import Header from "../components/StoreComponent/Header/Header";
 import Shopping from "../components/StoreComponent/Shopping/Shopping";
+
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { fetchProducts } from "../redux/slices/productSlice";
 
-export default function Home() {
+const Index = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchProducts());
@@ -16,4 +16,6 @@ export default function Home() {
       <Shopping />
     </>
   );
-}
+};
+Index.layout = "PublicLayout";
+export default Index;

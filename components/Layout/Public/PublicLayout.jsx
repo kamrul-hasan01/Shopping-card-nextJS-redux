@@ -1,7 +1,11 @@
 import React from "react";
 
-const PublicLayout = () => {
-  return <div>public layout</div>;
+const PublicLayout = ({ children }) => {
+  return (
+    <>
+      <main className="">{children}</main>
+    </>
+  );
 };
 
 export default PublicLayout;

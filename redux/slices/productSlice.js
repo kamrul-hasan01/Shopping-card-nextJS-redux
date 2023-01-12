@@ -6,8 +6,9 @@ const initialState = {
   products: [],
   error: "",
 };
-export const fetchProducts = createAsyncThunk("fetchProducts", () => {
-  return axios.get("https://kamrul.pro/api/products.json");
+export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
+  const data = await axios.get("https://kamrul.pro/api/products.json");
+  return data;
 });
 const productSlice = createSlice({
   name: "products",

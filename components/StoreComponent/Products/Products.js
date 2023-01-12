@@ -4,7 +4,7 @@ import Loading from "../../Common/Loading/Loading";
 
 import Product from "./Product";
 const Products = () => {
-  const { products, loading } = useSelector((state) => state.products);
+  const { products, loading, error } = useSelector((state) => state.products);
 
   return (
     <>
