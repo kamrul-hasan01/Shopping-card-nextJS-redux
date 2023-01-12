@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Loading from "../Loading/Loading";
+import Loading from "../../Common/Loading/Loading";
+
 import Product from "./Product";
 const Products = () => {
   const { products, loading } = useSelector((state) => state.products);

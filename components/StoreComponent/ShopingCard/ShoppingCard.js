@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "../../redux/slices/cartSlice";
-import { Minus, Plus } from "../SVG/SVG";
+import { setCart } from "../../../redux/slices/cartSlice";
+
+import { Minus, Plus } from "../../SVG/SVG";
 
 const ShoppingCard = () => {
   const { cart } = useSelector((state) => state.cart);

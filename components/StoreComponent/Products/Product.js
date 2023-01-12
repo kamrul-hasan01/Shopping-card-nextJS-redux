@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "../../redux/slices/cartSlice";
-import { Start } from "../SVG/SVG";
+import { setCart } from "../../../redux/slices/cartSlice";
+
+import { Start } from "../../SVG/SVG";
 
 const Product = ({ content }) => {
   const dispatch = useDispatch();
