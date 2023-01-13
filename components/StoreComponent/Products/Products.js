@@ -1,11 +1,15 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../../redux/slices/productSlice";
 import Loading from "../../Common/Loading/Loading";
 
 import Product from "./Product";
 const Products = () => {
-  const { products, loading, error } = useSelector((state) => state.products);
-
+  const { products, loading } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
   return (
     <>
       <div className="flex flex-wrap">

@@ -10,6 +10,7 @@ module.exports = {
     },
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
+      "pt-sans": ["PT Sans", "sans-serif"],
     },
     extend: {},
   },
