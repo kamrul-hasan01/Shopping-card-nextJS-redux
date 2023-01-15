@@ -1,5 +1,5 @@
 import React from "react";
-import { CloseIcon } from "../SVG/SVG";
+import { CloseIcon } from "../../SVG/SVG";
 
 const Modal = ({ children, title, toggleModal, isOpen }) => {
   return (
