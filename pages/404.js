@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 const Custom = () => {
   const Router = useRouter();
   useEffect(() => {
-    Router.push("/");
+    // Router.push("/");
   }, [Router]);
   return <div></div>;
 };

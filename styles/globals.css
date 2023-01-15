@@ -8,3 +8,16 @@
     @apply font-montserrat;
   } */
 }
+
+@layer components {
+  .scrollbar-gray::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-gray::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-gray::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background: #d9d9d988;
+  }
+}
