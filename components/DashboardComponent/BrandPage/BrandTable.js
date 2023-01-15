@@ -1,9 +1,10 @@
-import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import Modal from "../Common/Modal/Modal";
-import { Delete, Edit } from "../SVG/SVG";
-import { URL } from "../Utils/BaseUrl";
+import Modal from "../../Common/Modal/Modal";
+import { DeleteRequest } from "../../Hooks/HTTPRequest/DeleteRequest";
+import { GetRequest } from "../../Hooks/HTTPRequest/GetRequest";
+import { PatchRequest } from "../../Hooks/HTTPRequest/PatchRequest";
+import { Delete, Edit } from "../../SVG/SVG";
 
 const BrandTable = ({ content, setBrandTableData }) => {
   const [editBradModal, setEditBrandModal] = useState(false);
@@ -17,47 +18,35 @@ const BrandTable = ({ content, setBrandTableData }) => {
     newFromData[field] = value;
     setFormData(newFromData);
   };
-  const fetchData = async () => {
-    try {
-      let response = await axios.get(`${URL}/brand`);
-      await setBrandTableData(response?.data?.data || []);
-    } catch (error) {
-      console.log("error :", error);
-    }
-  };
+
   const handleSubmit = async (e, id) => {
     e.preventDefault();
+    setEditBrandModal(false);
     try {
-      const url = URL + "/brand/" + id;
-      const result = await axios.patch(url, formData);
+      const url = "/brand/" + id;
+      const result = await PatchRequest(url, formData);
       console.log("result :", result);
-      if (result.data.status == "success") {
-        form.current.reset();
-        setEditBrandModal(false);
-        await fetchData();
-        await toast.success("Band update Successfully");
+      if (result) {
+        toast.success("Band update Successfully");
+        await GetRequest("/brand/", setBrandTableData);
       }
     } catch (error) {
       console.log("error :", error);
-      setEditBrandModal(false);
-      form.current.reset();
       toast.error("Band update Failed");
     }
   };
   const handleBrandDelete = async (id) => {
+    setDeleteBrandModal(false);
     try {
-      const url = URL + "/brand/" + id;
-      const result = await axios.delete(url);
+      const url = "/brand/" + id;
+      const result = await DeleteRequest(url);
       console.log("result :", result);
-      if (result.data.status == "success") {
-        setDeleteBrandModal(false);
-        await fetchData();
+      if (result) {
         toast.success("Band delete Successfully");
+        await GetRequest("/brand/", setBrandTableData);
       }
     } catch (error) {
       console.log("error :", error);
-      setDeleteBrandModal(false);
-      form.current.reset();
       toast.error("Band delete Failed");
     }
   };

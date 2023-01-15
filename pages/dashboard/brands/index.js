@@ -1,15 +1,13 @@
-import axios from "axios";
 import React, { useState } from "react";
-import BrandTable from "../../../components/BrandPage/BrandTable";
-import BrandTitle from "../../../components/BrandPage/BrandTitle";
-import { URL } from "../../../components/Utils/BaseUrl";
+import BrandTable from "../../../components/DashboardComponent/BrandPage/BrandTable";
+import BrandTitle from "../../../components/DashboardComponent/BrandPage/BrandTitle";
+import { GetRequest } from "../../../components/Hooks/HTTPRequest/GetRequest";
 
-const Index = ({ brandData }) => {
-  console.log("brandData :", brandData);
-  const [BrandTableData, setBrandTableData] = useState(brandData);
+const Index = ({ data }) => {
+  const [BrandTableData, setBrandTableData] = useState(data);
   return (
     <div className="m-5 mx-10">
-      <BrandTitle />
+      <BrandTitle setBrandTableData={setBrandTableData} />
       <div class=" overflow-x-auto shadow-md">
         <BrandTable
           content={BrandTableData}
@@ -21,16 +19,10 @@ const Index = ({ brandData }) => {
 };
 
 export async function getServerSideProps() {
-  let result;
-  try {
-    result = await axios.get(`${URL}/brand`);
-  } catch (error) {
-    console.log("error :", error);
-  }
-
+  let result = await GetRequest("/brand");
   return {
     props: {
-      brandData: result?.data?.data || [],
+      data: result || [],
     },
   };
 }

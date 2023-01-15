@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import Modal from "../Common/Modal/Modal";
-import { URL } from "../Utils/BaseUrl";
+import Modal from "../../Common/Modal/Modal";
+import { GetRequest } from "../../Hooks/HTTPRequest/GetRequest";
+import { PostRequest } from "../../Hooks/HTTPRequest/PostRequest";
 
-const BrandTitle = () => {
+const BrandTitle = ({ setBrandTableData }) => {
   const [addBradModal, setAddBrandModal] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -18,18 +18,17 @@ const BrandTitle = () => {
   const form = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    form.current.reset();
+    setAddBrandModal(false);
+
     try {
-      const url = URL + "/brand";
-      const result = await axios.post(url, formData);
-      if (result.data.status == "success") {
-        form.current.reset();
-        setAddBrandModal(false);
+      const result = await PostRequest("/brand", formData);
+      if (result) {
         toast.success("Band Add Successfully");
+        await GetRequest("/brand", setBrandTableData);
       }
     } catch (error) {
       console.log("error :", error);
-      setAddBrandModal(false);
-      form.current.reset();
       toast.error("Band Add Failed");
     }
   };
