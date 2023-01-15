@@ -56,7 +56,7 @@ const SideBar = () => {
   ];
   const router = useRouter();
   return (
-    <section className="w-2/12  min-h-[100vh] bg-[#182335]">
+    <section className="w-2/12  min-h-[100vh] bg-navyBlue">
       <div className="mt-[13vh] py-4 pl-5 overflow-hidden  h-[calc(100vh-13vh)] overflow-y-visible scrollbar-gray">
         <ul className="flex flex-col">
           {nav_list.map((item, idx) => {
@@ -66,7 +66,7 @@ const SideBar = () => {
                   href={item.nav_link}
                   className={`flex items-center gap-x-2 group p-2 rounded-l my-1 text-[15px] leading-6 hover:text-[#8280fd] group-hover:bg-[#050717] ${
                     router.pathname === item.nav_link &&
-                    "text-[#8280fd] bg-[#050717] "
+                    "text-purple bg-darkBlue "
                   } `}
                 >
                   {item.nav_icon} <span> {item.nav_name}</span>

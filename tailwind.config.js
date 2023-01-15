@@ -24,7 +24,13 @@ module.exports = {
       montserrat: ["Montserrat", "sans-serif"],
       "pt-sans": ["PT Sans", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      colors: {
+        darkBlue: "#050717",
+        purple: "#8280fd",
+        navyBlue: "#182335",
+      },
+    },
   },
   plugins: [],
 };
