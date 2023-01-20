@@ -10,9 +10,9 @@ const UserTable = () => {
           <td className="px-6 py-4">ID</td>
           <th className="px-6 py-3">Name</th>
           <th className="px-6 py-3">Email</th>
-          <th className="px-6 py-3">Brand</th>
-          <th className="px-6 py-3">License</th>
-          <th className="px-6 py-3">Image</th>
+          <th className="px-6 py-3">Phone</th>
+          <th className="px-6 py-3">Address</th>
+          <th className="px-6 py-3">Role</th>
           <th className="px-6 py-3">Status</th>
           <th className="px-6 py-3  text-center">Action</th>
         </tr>
@@ -26,8 +26,8 @@ const UserTable = () => {
             >
               <td className="px-6 py-4">{idx + 1}</td>
               <td className="px-6 py-4">item.name</td>
-              <td className="px-6 py-4">item.description</td>
-              <td className="px-6 py-4">Brand</td>
+              <td className="px-6 py-4">Email</td>
+              <td className="px-6 py-4">Phone</td>
               <td className="px-6 py-4">License</td>
               <td className="px-6 py-4">images</td>
               <td className="px-6 py-4">Status</td>
