@@ -19,6 +19,8 @@ const UserTitle = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("formData :", formData);
+    form.current.reset();
+    setIsOpen(false);
   };
   return (
     <>
