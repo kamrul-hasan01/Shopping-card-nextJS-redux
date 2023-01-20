@@ -87,12 +87,6 @@ const StoreTitle = ({ setStoreDate }) => {
                 </option>
               );
             })}
-            <option value="dhaka" className="text-black">
-              Dhaka
-            </option>
-            <option value="khulna" className="text-black">
-              khulna
-            </option>
           </select>
 
           <textarea
