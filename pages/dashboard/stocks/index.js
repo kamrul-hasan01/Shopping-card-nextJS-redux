@@ -1,5 +1,5 @@
 import React from "react";
-import ProductTable from "../../../components/DashboardComponent/ProductPage/ProductTable";
+import StockTable from "../../../components/DashboardComponent/StockPage/StockTable";
 import StockTItle from "../../../components/DashboardComponent/StockPage/StockTItle";
 
 const index = () => {
@@ -7,7 +7,7 @@ const index = () => {
     <div className="m-5 mx-10">
       <StockTItle />
       <div class=" overflow-x-auto shadow-md">
-        <ProductTable />
+        <StockTable />
       </div>
     </div>
   );
