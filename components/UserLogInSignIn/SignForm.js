@@ -21,13 +21,13 @@ const SignForm = () => {
     e.preventDefault();
     const formImage = new FormData();
     formImage.append("image", file);
-
+    formImage.append("key", "2c9d8a3e615b65e21bed015b6d901ef0");
+    formImage.append("album", "shopping-site/user");
     form.current.reset();
     try {
-      const data = await axios("/api/upload", {
+      const data = await axios("https://api.imgbb.com/1/upload", {
         method: "POST",
         data: formImage,
-        "content-type": "multipart/form-data",
       });
       console.log("data :", data);
     } catch (error) {
