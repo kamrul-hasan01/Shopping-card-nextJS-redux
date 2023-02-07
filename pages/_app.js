@@ -11,8 +11,8 @@ const layoutList = {
   PublicLayout: PublicLayout,
 };
 export default function App({ Component, pageProps }) {
-  console.log(Component.layout);
   const Layout = layoutList[Component.layout] || PublicLayout;
+
   return (
     <Provider store={store}>
       <Header />
