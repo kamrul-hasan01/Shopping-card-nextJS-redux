@@ -1,72 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "../../../redux/slices/cartSlice";
+import React from "react";
+import useCart from "../../Hooks/useCart";
 
 import { Minus, Plus } from "../../SVG/SVG";
 
 const ShoppingCard = () => {
-  const { cart } = useSelector((state) => state.cart);
-  const { products } = useSelector((state) => state.products);
+  const { handleDelete, cart, totalPrice, handleCheckout, handleQuantity } =
+    useCart();
 
-  const total = cart?.reduce(
-    (previous, product) => previous + product?.price * product?.quantity,
-    0
-  );
-  const dispatch = useDispatch();
-
-  const handleDelete = (id) => {
-    const newCart = cart.filter((item) => item.key !== id);
-    dispatch(setCart(newCart));
-  };
-  const handleQuantity = (key, type) => {
-    const newCart = cart.map((item) => {
-      if (item.key === key) {
-        let newProduct;
-        if (type === "plus" && item.quantity < item.stock) {
-          newProduct = { ...item };
-          newProduct.quantity = newProduct.quantity + 1;
-        } else if (type === "minus" && item.quantity > 1) {
-          newProduct = { ...item };
-
-          newProduct.quantity = newProduct.quantity - 1;
-        } else return item;
-        return newProduct;
-      } else return item;
-    });
-
-    dispatch(setCart(newCart ? newCart : []));
-  };
-  const handleCheckout = () => {
-    const confirm = window.confirm("sure");
-    if (confirm) {
-      dispatch(setCart([]));
-      localStorage.removeItem("cart");
-    }
-  };
-
-  const handleTest = () => {
-    console.log("hello");
-    const getData = JSON.parse(localStorage.getItem("cart"));
-    let newCart = [];
-
-    if (getData) {
-      products.filter((item) =>
-        getData.find((local_item) => {
-          let newItem;
-          if (local_item.key === item.key) {
-            newItem = { ...item };
-            newItem.quantity = local_item.quantity;
-            newCart = [...newCart, newItem];
-          }
-        })
-      );
-      dispatch(setCart(newCart));
-    }
-  };
-  useEffect(() => {
-    handleTest();
-  }, [products]);
   return (
     <div className="sticky top-0 left-0  w-full">
       <div className="h-screen overflow-y-auto pt-28">
@@ -121,7 +62,7 @@ const ShoppingCard = () => {
             })
           ) : (
             <li>
-              <p>Your cart is empty</p>
+              <p className="pt-10">Your cart is empty</p>
             </li>
           )}
         </ul>
@@ -129,7 +70,7 @@ const ShoppingCard = () => {
       <div className="border-t border-gray-200 py-6 px-4 sm:px-6 absolute left-0 bottom-0 w-full">
         <div className="flex justify-between text-base font-medium">
           <p>Subtotal</p>
-          <p>${total.toFixed(2)}</p>
+          <p>${totalPrice.toFixed(2)}</p>
         </div>
         <p className="mt-0.5 text-sm text-gray-500">
           Shipping and taxes calculated at checkout.

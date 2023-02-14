@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "../../../redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
+import useCart from "../../Hooks/UseCart";
 
 import { Start } from "../../SVG/SVG";
 
@@ -9,33 +9,9 @@ const Product = ({ content }) => {
   const dispatch = useDispatch();
 
   const { name, price, img } = content;
-  const { cart } = useSelector((state) => state.cart);
 
-  const handleAddCart = (product) => {
-    let exists = cart.find((pd) => pd.key === product.key);
-    let newCart = [];
-    if (exists) {
-      newCart = cart.map((item) => {
-        if (item.key === product.key) {
-          let newProduct = { ...item };
-          newProduct.quantity = newProduct.quantity + 1;
-          return newProduct;
-        } else return item;
-      });
-    } else {
-      let newProduct = { ...product };
-      newProduct.quantity = 1;
-      newCart = [...cart, newProduct];
-    }
-    dispatch(setCart(newCart));
-    const cartItem = newCart.map((item) => {
-      return {
-        key: item.key,
-        quantity: item.quantity,
-      };
-    });
-    localStorage.setItem("cart", JSON.stringify(cartItem));
-  };
+  const { handleAddCart, cart } = useCart();
+
   return (
     <div className="w-4/12 p-4">
       <div className="rounded-lg shadow-md bg-gray-800 border-gray-700">

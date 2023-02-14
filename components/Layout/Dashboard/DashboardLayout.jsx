@@ -1,10 +1,10 @@
 import React from "react";
-import useGetUser from "../../Hooks/useGetUser";
+import useHandleUser from "../../Hooks/useGetUser";
 import SideBar from "../SideBar/SideBar";
 import TopBar from "../TopBar/TopBar";
 
 const DashboardLayout = ({ children }) => {
-  const getUsers = useGetUser();
+  const getUsers = useHandleUser();
   return (
     <>
       <main className="flex bg-[#050717] text-white font-pt-sans">

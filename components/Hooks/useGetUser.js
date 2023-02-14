@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUserInfo } from "../../redux/slices/userSlice";
 import { URL } from "../Utils/BaseUrl";
 
-const useGetUser = async () => {
+const useHandleUser = async () => {
   const { token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleToken = () => {
-    console.log("handle token func");
     if (!token) {
       const localStorageToken = localStorage.getItem("token");
       if (localStorageToken) {
@@ -43,4 +42,4 @@ const useGetUser = async () => {
   return null;
 };
 
-export default useGetUser;
+export default useHandleUser;

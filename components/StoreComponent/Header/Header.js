@@ -10,6 +10,7 @@ const Header = () => {
     (previous, product) => previous + product?.quantity,
     0
   );
+
   return (
     <header className="border-b border-gray-200 w-full pl-44 fixed top-0 left-0 right-0 bg-[#0F172A] z-[999]">
       <div className="px-4 mx-auto sm:px-6 lg:px-8 text-white container">
@@ -42,24 +43,28 @@ const Header = () => {
               </svg>
               <span>{totalItem}</span>
             </Link>
-
+            <Link href="/shopping" title="" className="text-base font-medium">
+              Cart
+            </Link>
             {userInfo?.fullName ? (
-              <div className="flex items-center gap-x-3">
-                <p>
-                  <span className="text-[17px] font-medium block">
-                    {userInfo?.fullName}
-                  </span>
-                  <span className="text-[14px] text-[#c4c4c4] font-normal block">
-                    {userInfo?.email}
-                  </span>
-                </p>
+              <>
+                <div className="flex items-center gap-x-3">
+                  <p>
+                    <span className="text-[17px] font-medium block">
+                      {userInfo?.fullName}
+                    </span>
+                    <span className="text-[14px] text-[#c4c4c4] font-normal block">
+                      {userInfo?.email}
+                    </span>
+                  </p>
 
-                <img
-                  src={userInfo?.imageURL}
-                  alt=""
-                  className="h-[70px] w-[70px] rounded-full"
-                />
-              </div>
+                  <img
+                    src={userInfo?.imageURL}
+                    alt=""
+                    className="h-[70px] w-[70px] rounded-full"
+                  />
+                </div>
+              </>
             ) : (
               <Link
                 href="/user/log-in"

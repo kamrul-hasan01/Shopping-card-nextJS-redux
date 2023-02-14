@@ -1,8 +1,8 @@
 import React from "react";
-import useGetUser from "../../Hooks/useGetUser";
+import useHandleUser from "../../Hooks/useGetUser";
 
 const PublicLayout = ({ children }) => {
-  const getUsers = useGetUser();
+  const getUsers = useHandleUser();
 
   // const getToken
 
