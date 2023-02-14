@@ -1,16 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
+import { URL } from "../../Utils/BaseUrl";
 
 const Header = () => {
   const { cart } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
+  const router = useRouter();
   const totalItem = cart.reduce(
     (previous, product) => previous + product?.quantity,
     0
   );
-
+  const handlePayment = async () => {
+    try {
+      const result = await axios.post(`${URL}/payment/init`);
+      console.log("result :", result);
+      if (result?.data?.status === "success") {
+        router.push(result?.data?.url);
+      }
+    } catch (error) {
+      console.log("error :", error);
+    }
+  };
   return (
     <header className="border-b border-gray-200 w-full pl-44 fixed top-0 left-0 right-0 bg-[#0F172A] z-[999]">
       <div className="px-4 mx-auto sm:px-6 lg:px-8 text-white container">
@@ -20,7 +34,7 @@ const Header = () => {
               Home
             </Link>
           </div>
-
+          <p onClick={() => handlePayment()}>testing </p>
           <div className="hidden lg:flex lg:items-center lg:space-x-10">
             <Link
               href="/"
@@ -61,7 +75,7 @@ const Header = () => {
                   <img
                     src={userInfo?.imageURL}
                     alt=""
-                    className="h-[70px] w-[70px] rounded-full"
+                    className="h-[70px] w-[70px~] rounded-full"
                   />
                 </div>
               </>
