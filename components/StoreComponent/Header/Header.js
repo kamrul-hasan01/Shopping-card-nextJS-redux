@@ -5,9 +5,14 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const { cart } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.user);
+  const totalItem = cart.reduce(
+    (previous, product) => previous + product?.quantity,
+    0
+  );
   return (
-    <header className="border-b border-gray-200 w-9/12 pl-44 fixed top-0 left-0 bg-[#0F172A]">
-      <div className="px-4 mx-auto sm:px-6 lg:px-8 text-white">
+    <header className="border-b border-gray-200 w-full pl-44 fixed top-0 left-0 right-0 bg-[#0F172A] z-[999]">
+      <div className="px-4 mx-auto sm:px-6 lg:px-8 text-white container">
         <nav className="relative flex items-center justify-between h-16 lg:h-20">
           <div className="hidden lg:flex lg:items-center lg:space-x-10">
             <Link href="/" title="" className="text-lg font-medium">
@@ -35,11 +40,35 @@ const Header = () => {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span>{cart.length}</span>
+              <span>{totalItem}</span>
             </Link>
-            <Link href="/sing-in" title="" className="text-base font-medium">
-              Sign in
-            </Link>
+
+            {userInfo?.fullName ? (
+              <div className="flex items-center gap-x-3">
+                <p>
+                  <span className="text-[17px] font-medium block">
+                    {userInfo?.fullName}
+                  </span>
+                  <span className="text-[14px] text-[#c4c4c4] font-normal block">
+                    {userInfo?.email}
+                  </span>
+                </p>
+
+                <img
+                  src={userInfo?.imageURL}
+                  alt=""
+                  className="h-[70px] w-[70px] rounded-full"
+                />
+              </div>
+            ) : (
+              <Link
+                href="/user/log-in"
+                title=""
+                className="text-base font-medium"
+              >
+                Sign in
+              </Link>
+            )}
           </div>
         </nav>
       </div>

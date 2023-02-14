@@ -37,7 +37,7 @@ const Product = ({ content }) => {
     localStorage.setItem("cart", JSON.stringify(cartItem));
   };
   return (
-    <div className="w-3/12 p-4">
+    <div className="w-4/12 p-4">
       <div className="rounded-lg shadow-md bg-gray-800 border-gray-700">
         <img
           className="p-8 rounded-t-lg w-full"

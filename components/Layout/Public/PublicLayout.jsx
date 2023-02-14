@@ -1,21 +1,10 @@
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { URL } from "../../Utils/BaseUrl";
+import React from "react";
+import useGetUser from "../../Hooks/useGetUser";
 
 const PublicLayout = ({ children }) => {
-  const { userToken } = useSelector((state) => state.user);
-  const getUserData = async (token) => {
-    const result = axios(URL + "/user/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log("result :", result);
-  };
-  useEffect(() => {
-    if (userToken) getUserData();
-  }, [userToken]);
+  const getUsers = useGetUser();
+
+  // const getToken
 
   return (
     <>

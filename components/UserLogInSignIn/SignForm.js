@@ -61,7 +61,7 @@ const SignForm = () => {
           setLoading(false);
           if (response.data.status === "success") {
             dispatch(setToken(response.data.token));
-            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("token", JSON.stringify(response.data.token));
             notify("success", response.data.message);
           }
         } catch (error) {

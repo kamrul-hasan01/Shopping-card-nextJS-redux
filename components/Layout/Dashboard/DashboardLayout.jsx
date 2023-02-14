@@ -1,11 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import useGetUser from "../../Hooks/useGetUser";
 import SideBar from "../SideBar/SideBar";
 import TopBar from "../TopBar/TopBar";
 
 const DashboardLayout = ({ children }) => {
-  const { userToken } = useSelector((state) => state.user);
-  console.log("userToken :", userToken);
+  const getUsers = useGetUser();
   return (
     <>
       <main className="flex bg-[#050717] text-white font-pt-sans">

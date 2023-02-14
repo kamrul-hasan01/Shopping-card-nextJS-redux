@@ -4,11 +4,11 @@ import ShoppingCard from "../ShopingCard/ShoppingCard";
 
 const Shopping = () => {
   return (
-    <section className="container flex mt-32">
-      <div className="lg:w-10/12">
+    <section className="container flex">
+      <div className="lg:w-9/12 mt-24 pr-5">
         <Products />
       </div>
-      <div className="lg:w-2/12">
+      <div className="lg:w-3/12 relative">
         <ShoppingCard />
       </div>
     </section>
